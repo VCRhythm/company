@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  before_action :authenticate_user!, except: [:show, :main]
   before_action :set_page, only: [:show, :edit, :update, :destroy]
   layout 'default'
   # GET /pages
@@ -10,6 +11,11 @@ class PagesController < ApplicationController
   def main
     
   end
+
+  def dashboard
+    @apps = current_user.apps
+    @jobs = current_user.jobs
+  end  
 
   # GET /pages/1
   # GET /pages/1.json
