@@ -49,10 +49,16 @@
         <a class="navbar-brand" href="/">Company</a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><%= link_to "Dashboard", dashboard_path %></li>
-            <li><%= link_to @link[1].name, @link[1|.url  %></li>
-            <li><%= link_to @link[2].name, @link[2].url  %></li>
-            <% if user_signed_in? %><%= link_to "Logout", destroy_user_session_path, method: :delete %><% end %>
+            <li>
+            <% if user_signed_in? %>
+              <%= link_to current_user.email, dashboard_path %>
+            <% else %>
+              <%= link_to "Customer Portal", dashboard_path %></li>
+            <% end %>
+	    <% for link in @header_links %>
+	      <li><%= link_to link.name, link.url %></li>
+            <% end %>
+            <% if user_signed_in? %><li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li><% end %>
           </ul>
         </div>
       </div>
@@ -60,23 +66,13 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-lg-9">
+        <div class="col-lg-12">
           <%= bootstrap_flash %>
           <%= yield %>
         </div>
-        <div class="col-lg-3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
-              <li><%= link_to "Link1", "/path1"  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-      </div><!--/row-->
+     </div><!--/row-->
 
-      <footer>
+      <footer style="margin-top:10em">
         <p>&copy; Company 2015</p>
       </footer>
 

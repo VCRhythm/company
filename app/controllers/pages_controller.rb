@@ -11,12 +11,17 @@ class PagesController < ApplicationController
   end
 
   def main
-    
+    @page = Page.find_by(title:"Main")
+    @links = @page.links
   end
 
   def dashboard
     @apps = current_user.apps
-    @jobs = current_user.jobs
+    if current_user.employee?
+      @jobs = Job.all
+    else
+      @jobs = current_user.jobs
+    end
   end  
 
   # GET /pages/1
@@ -38,11 +43,14 @@ class PagesController < ApplicationController
   def create
     @page = Page.new(page_params)
 
-    respond_to do |format|
-      if @page.save
+    if @page.save
+      @link = Link.create(name:@page.title, url:"/pages/"+@page.id.to_s);
+      respond_to do |format|
         format.html { redirect_to @page, notice: 'Page was successfully created.' }
         format.json { render :show, status: :created, location: @page }
-      else
+      end
+    else
+      respond_to do |format|
         format.html { render :new }
         format.json { render json: @page.errors, status: :unprocessable_entity }
       end

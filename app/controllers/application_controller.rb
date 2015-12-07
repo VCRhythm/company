@@ -18,6 +18,11 @@ class ApplicationController < ActionController::Base
 
   protected
   def set_header_links
-      @links
+    page = Page.find_by(title:'Header')
+    if page
+      @header_links = page.links
+    else
+      @header_links = Array.new(0)
+    end
   end
 end

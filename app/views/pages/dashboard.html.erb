@@ -1,10 +1,22 @@
+<% if current_user.employee? %>
+<div class="col-lg-4">
+<h1>Pages</h1>
+<%= link_to "Edit Pages", pages_path, class: 'btn btn-primary' %>
+</div>
+<% size=4 %>
+<% else %>
+<% size=6 %>
+<% end %>
+<div class="col-lg-<%= size %>">
 <h1>Orders</h1>
 <%= link_to "New Order", new_job_path, class: 'btn btn-primary' %>
 <%= render @jobs %>
-
+</div>
+<div class="col-lg-<%= size %>">
 <h1>Apps</h1>
 <% if @apps.count > 0 %>
     <%= render @apps %>
 <% else %>
     <p>Request access to apps.</p> 
 <% end %>
+</div>

@@ -4,8 +4,14 @@
   <dt><strong><%= Job.human_attribute_name(:description) %>:</strong></dt>
   <dd><%= job.description %></dd>
   <dt><strong><%= Job.human_attribute_name(:progress) %>:</strong></dt>
-  <dd><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="<%= job.progress %>" aria-valuemin="0" aria-valuemax="100"><%= job.progress %>%</div></div></dd>
+  <dd>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuenow="<%= job.progress %>" aria-valuemin="0" aria-valuemax="100" style="width:<%=job.progress%>%;"><%= job.progress %>%</div>
+    </div>
+  </dd>
   <dt><strong><%= Job.human_attribute_name(:status) %>:</strong></dt>
   <dd><%= job.status %></dd>
-</dl>
-
+  <% if current_user.employee? %>
+    <dd><%= link_to t('.edit', :default => t("helpers.links.edit")), edit_job_path(job), :class => 'btn btn-default btn-xs' %></dd>
+  <% end %>
+</dl>  
