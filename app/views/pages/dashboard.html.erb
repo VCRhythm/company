@@ -1,4 +1,10 @@
-<h1>Jobs</h1>
+<h1>Orders</h1>
+<%= link_to "New Order", new_job_path, class: 'btn btn-primary' %>
 <%= render @jobs %>
+
 <h1>Apps</h1>
-<%= render @apps %>
+<% if @apps.count > 0 %>
+    <%= render @apps %>
+<% else %>
+    <p>Request access to apps.</p> 
+<% end %>

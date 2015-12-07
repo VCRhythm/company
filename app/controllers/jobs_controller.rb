@@ -1,5 +1,8 @@
 class JobsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_job, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_employee!, only: [:index, :show, :edit, :update, :destroy]
+
   layout 'default'
 
   # GET /jobs
@@ -26,12 +29,15 @@ class JobsController < ApplicationController
   # POST /jobs.json
   def create
     @job = Job.new(job_params)
-
-    respond_to do |format|
-      if @job.save
-        format.html { redirect_to @job, notice: 'Job was successfully created.' }
+    
+    if @job.save
+      current_user.jobs << @job
+      respond_to do |format|
+        format.html { redirect_to dashboard_url, notice: 'Job was successfully created.' }
         format.json { render :show, status: :created, location: @job }
-      else
+      end
+    else
+      respond_to do |format|
         format.html { render :new }
         format.json { render json: @job.errors, status: :unprocessable_entity }
       end
@@ -66,6 +72,12 @@ class JobsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_job
       @job = Job.find(params[:id])
+    end
+
+    def authenticate_owner_or_employee!
+        if @job.user != current_user && !current_user.employee?
+            redirect_to dashboard_url, notice: 'You do not have ownership over this order.'
+        end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

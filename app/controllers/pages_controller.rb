@@ -1,7 +1,9 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!, except: [:show, :main]
+  before_action :authenticate_employee!, except: [:show, :main, :dashboard]
   before_action :set_page, only: [:show, :edit, :update, :destroy]
   layout 'default'
+
   # GET /pages
   # GET /pages.json
   def index
@@ -77,6 +79,7 @@ class PagesController < ApplicationController
       @page = Page.find(params[:id])
     end
 
+    
     # Never trust parameters from the scary internet, only allow the white list through.
     def page_params
       params.require(:page).permit(:title, :content)
