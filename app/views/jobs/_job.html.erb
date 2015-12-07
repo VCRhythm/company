@@ -4,7 +4,7 @@
   <dt><strong><%= Job.human_attribute_name(:description) %>:</strong></dt>
   <dd><%= job.description %></dd>
   <dt><strong><%= Job.human_attribute_name(:progress) %>:</strong></dt>
-  <dd><%= job.progress %></dd>
+  <dd><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="<%= job.progress %>" aria-valuemin="0" aria-valuemax="100"><%= job.progress %>%</div></div></dd>
   <dt><strong><%= Job.human_attribute_name(:status) %>:</strong></dt>
   <dd><%= job.status %></dd>
 </dl>

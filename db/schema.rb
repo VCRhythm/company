@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151206015220) do
+ActiveRecord::Schema.define(version: 20151207032813) do
+
+  create_table "app_access", id: false, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "app_id",  null: false
+  end
+
+  add_index "app_access", ["user_id", "app_id"], name: "index_app_access_on_user_id_and_app_id"
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
@@ -36,11 +43,25 @@ ActiveRecord::Schema.define(version: 20151206015220) do
 
   add_index "jobs", ["user_id"], name: "index_jobs_on_user_id"
 
-  create_table "posts", force: :cascade do |t|
+  create_table "links", force: :cascade do |t|
+    t.string   "name"
+    t.string   "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "page_links", id: false, force: :cascade do |t|
+    t.integer "page_id", null: false
+    t.integer "link_id", null: false
+  end
+
+  add_index "page_links", ["page_id", "link_id"], name: "index_page_links_on_page_id_and_link_id"
+
+  create_table "pages", force: :cascade do |t|
     t.string   "title"
-    t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.text     "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -61,7 +82,7 @@ ActiveRecord::Schema.define(version: 20151206015220) do
     t.integer  "failed_attempts",        default: 0,  null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.boolean  "employee?"
+    t.boolean  "employee"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end

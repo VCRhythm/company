@@ -16,5 +16,11 @@ test:
   database: company_test
 
 production:
+<<<<<<< HEAD
   <<: *default
+=======
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+>>>>>>> b59798fb977ab44f6cb77e0aa63d4225f0a6a14c
   database: company_production

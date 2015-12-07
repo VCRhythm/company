@@ -7,6 +7,7 @@
     <tr>
       <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:title) %></th>
+      <th><%= model_class.human_attribute_name(:user) %></th>
       <th><%= model_class.human_attribute_name(:description) %></th>
       <th><%= model_class.human_attribute_name(:progress) %></th>
       <th><%= model_class.human_attribute_name(:status) %></th>
@@ -19,6 +20,7 @@
       <tr>
         <td><%= link_to job.id, job_path(job) %></td>
         <td><%= job.title %></td>
+        <td><%= job.user.email %></td>
         <td><%= job.description %></td>
         <td><%= job.progress %></td>
         <td><%= job.status %></td>
